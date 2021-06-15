@@ -52,6 +52,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.log("custom count: " + data);
     }, error => {
       alert(error.message);
+    }, () =>{
+      console.log('customIntervalObserable completed');
     });
   }
 
