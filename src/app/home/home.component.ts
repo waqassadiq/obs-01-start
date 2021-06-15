@@ -27,8 +27,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       let count = 100;
       setInterval( () =>{
         observer.next(count);
+        // here, it goes into hault, nothing else we need to do
+        // similarly, http request a completed after getting response
+        if(count>300){
+          observer.complete();
+        }
 
-        if(count>3){
+        if(count>500){
           observer.error(new Error('Count is great then 3!'));
         }
 
