@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { interval, Subscription, Observable } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private customeSubscription: Subscription;
 
   constructor() { }
-  
+
 
   ngOnInit() {
     // writing our own obserable
@@ -23,17 +24,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     // writing pure obserablle
-    const customIntervalObserable = Observable.create( observer => {
+    const customIntervalObserable = Observable.create(observer => {
       let count = 100;
-      setInterval( () =>{
+      setInterval(() => {
         observer.next(count);
         // here, it goes into hault, nothing else we need to do
         // similarly, http request a completed after getting response
-        if(count>300){
+        if (count > 300) {
           observer.complete();
         }
 
-        if(count>500){
+        if (count > 500) {
           observer.error(new Error('Count is great then 3!'));
         }
 
@@ -43,16 +44,26 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         // to tell that you are done
         //observer.complete();
-
-
       }, 1000);
     });
 
-    this.customeSubscription = customIntervalObserable.subscribe(data => {
-        console.log("custom count: " + data);
+    /**
+    // it's not going to work here, but if we put it in obserable, where we
+    // are subscribing to
+    customIntervalObserable.pipe( map( (data: number) =>{
+      return 'Round: ' + (data + 1);
+    }));
+     */
+
+    this.customeSubscription = customIntervalObserable.pipe(filter(data => {
+      return data>100;
+    }) ,map( (data: number) =>{
+      return 'Round: ' + (data + 1);
+    })).subscribe(data => {
+      console.log("custom count: " + data);
     }, error => {
       alert(error.message);
-    }, () =>{
+    }, () => {
       console.log('customIntervalObserable completed');
     });
   }
