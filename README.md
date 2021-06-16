@@ -35,3 +35,12 @@ you can run this project in two ways
 
 1. `npm start`
 2. `ng serve` 
+
+
+## Useful Resources:
+
+    Official Docs: https://rxjs-dev.firebaseapp.com/
+
+    RxJS Series: https://academind.com/learn/javascript/understanding-rxjs/
+
+    Updating to RxJS 6: https://academind.com/learn/javascript/rxjs-6-what-changed/
