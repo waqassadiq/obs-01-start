@@ -14,5 +14,9 @@ export class AppComponent implements OnInit {
     this.userService.activatedEmitter.subscribe(didActivate =>{
       this.userActiviated = didActivate;
     });
+
+    this.userService.activatedSubjectEmitter.subscribe(didActivate =>{
+      this.userActiviated = didActivate;
+    });
   }
 }
